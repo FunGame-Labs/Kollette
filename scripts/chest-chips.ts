@@ -71,8 +71,10 @@ const main = async () => {
 
   // uploads and creates the NFTs on chain
   const results = await contract.erc1155.mintBatch(metadataWithSupply);
-  const firstNFT = await results[0].data();
-  console.log("🚀 firstNFT ~ ", firstNFT);
+  if (results[0]) {
+    const firstNFT = await results[0].data();
+    console.log("🚀 firstNFT ~ ", firstNFT);
+  }
 };
 
 main()

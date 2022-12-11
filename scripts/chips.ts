@@ -60,7 +60,7 @@ const main = async () => {
   const price = [0.01, 0.02, 0.05, 0.1, 0.5];
   const amount = [10, 5, 2, 1, 0];
   for (let index = 0; index < results.length; index++) {
-    const tokenId = results[index].id;
+    const tokenId = results[index]?.id || index;
 
     await contract.claimConditions.set(tokenId, [
       {
@@ -72,7 +72,7 @@ const main = async () => {
 
   for (let index = 0; index < price.length; index++) {
     // Fund and Mint
-    const tx = await contract.claim(index, amount[index]);
+    const tx = await contract.claim(index, amount[index] || 10);
     console.log("tx: ", tx);
   }
 };

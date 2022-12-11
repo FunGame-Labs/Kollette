@@ -5,10 +5,9 @@ import {
   useContract,
   useContractRead,
   useOwnedNFTs,
-  Web3Button,
+  Web3Button
 } from "@thirdweb-dev/react";
 import { PackRewards } from "@thirdweb-dev/sdk/dist/declarations/src/evm/schema";
-import { BigNumber, utils } from "ethers";
 import type { FC } from "react";
 import { useState } from "react";
 import ERC1155RewardBox from "../components/ERC1155RewardBox";

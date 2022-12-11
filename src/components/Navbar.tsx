@@ -1,14 +1,9 @@
 "use client";
 
 import { ConnectWallet } from "@thirdweb-dev/react";
-import { clsx } from "clsx";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import type { FC } from "react";
 
 const Navbar: FC = () => {
-  const router = useRouter();
-
   return (
     <div className="navbar sticky top-0 z-50 bg-neutral-medium">
       <div className="navbar-start">

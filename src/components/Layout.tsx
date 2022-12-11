@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { FC, ReactNode } from "react";
-import MenuIconMarket from "../components/MenuIconMarket";
 import Navbar from "../components/Navbar";
-import MenuIconChests from "./MenuIconChests";
 import MenuIconRoulette from "./MenuIconRoulette";
 
 interface SidebarProps {

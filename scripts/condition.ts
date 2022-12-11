@@ -39,7 +39,7 @@ const main = async () => {
 
   for (let index = 0; index < price.length; index++) {
     // Fund and Mint
-    const tx = await contract.claim(index, amount[index]);
+    const tx = await contract.claim(index, amount[index] || 10);
     console.log("tx: ", tx);
   }
 };
