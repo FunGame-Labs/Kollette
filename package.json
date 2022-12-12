@@ -16,6 +16,9 @@
   "author": "aeither",
   "homepage": "https://github.com/aeither/Kollette#readme",
   "dependencies": {
+    "@headlessui/react": "^1.7.5",
+    "@radix-ui/react-dialog": "^1.0.2",
+    "@radix-ui/react-icons": "^1.1.1",
     "@radix-ui/react-radio-group": "^1.1.0",
     "@thirdweb-dev/react": "^3.6.2",
     "@thirdweb-dev/sdk": "^3.6.2",
@@ -24,6 +27,7 @@
     "axios": "^1.2.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
+    "classnames": "^2.3.2",
     "clsx": "^1.2.1",
     "daisyui": "^2.42.1",
     "dotenv": "^16.0.3",
@@ -31,6 +35,7 @@
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.40.0",
     "react-hot-toast": "^2.4.0",
     "zod": "^3.18.0"
   },
