@@ -14,6 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import SlotMachine from "../lib";
 import { KOLLETTE_ABI } from "../utils/abis";
 import { KOLLETTE_ADDRESS } from "../utils/constants";
+import { useAudio } from "react-use";
 
 const timeout = (delay: number) => new Promise((res) => setTimeout(res, delay));
 
@@ -34,6 +35,15 @@ const ChipsSelect: FC = () => {
   const [slotMachine3, setSlotMachine3] = useState<SlotMachine>();
   const address = useAddress();
   const { contract: kollette } = useContract(KOLLETTE_ADDRESS, KOLLETTE_ABI);
+  const [wheelAudio, , wheelControls] = useAudio({
+    src: "/wheel.wav",
+    autoPlay: false,
+  });
+  const [coinAudio, , coinControls] = useAudio({
+    src: "/coins.wav",
+    autoPlay: false,
+
+  });
   const { mutateAsync: spin } = useContractWrite(kollette, "FUNCTION_NAME");
   const events = useContractEvents(kollette, "Play", { subscribe: true });
   useEffect(() => {
@@ -60,7 +70,7 @@ const ChipsSelect: FC = () => {
   useEffect(() => {
     if (ref1.current) {
       const machine: SlotMachine = new SlotMachine(ref1.current, {
-        active: 1,
+        active: 0,
         delay: 450,
       });
       setSlotMachine1(machine);
@@ -74,7 +84,7 @@ const ChipsSelect: FC = () => {
     }
     if (ref3.current) {
       const machine: SlotMachine = new SlotMachine(ref3.current, {
-        active: 1,
+        active: 2,
         delay: 450,
       });
       setSlotMachine3(machine);
@@ -98,12 +108,10 @@ const ChipsSelect: FC = () => {
 
   const spinMachine = async () => {
     slotMachine1?.shuffle(3);
-    slotMachine2?.shuffle(4);
-    slotMachine3?.shuffle(5);
-    console.log(
-      "🚀 ~ file: ChipsSelect.tsx:90 ~ spinMachine ~ slotMachine?.active",
-      slotMachine1?.active
-    );
+    slotMachine2?.shuffle(5);
+    slotMachine3?.shuffle(7);
+
+    await wheelControls.play();
   };
 
   return (
@@ -210,8 +218,11 @@ const ChipsSelect: FC = () => {
 
       {/* Chips */}
       <div className="flex flex-row gap-2">
+        {coinAudio}
+        {wheelAudio}
         <RadioGroupPrimitive.Root
           onValueChange={(e) => {
+            coinControls.play();
             setValue(e);
             setType(chipType[Number(e)]!.title);
           }}

@@ -5,7 +5,7 @@ import {
   useContract,
   useContractRead,
   useOwnedNFTs,
-  Web3Button
+  Web3Button,
 } from "@thirdweb-dev/react";
 import { PackRewards } from "@thirdweb-dev/sdk/dist/declarations/src/evm/schema";
 import type { FC } from "react";
@@ -18,11 +18,9 @@ const Chest: FC = () => {
   const { contract: pack } = useContract(PACK_ADDRESS, "pack");
   const { data: nfts, isLoading } = useOwnedNFTs(pack, address);
   const [openedPackRewards, setOpenedPackRewards] = useState<PackRewards>();
-  const { contract } = useContract(
-    "0xA9BB549899512f296825cb68F0347298917A1616"
-  );
+
   const { data: chestAmount, isLoading: chestAmountIsLoading } =
-    useContractRead(contract, "balanceOf", address, 0);
+    useContractRead(pack, "balanceOf", address, 0);
   console.log(
     "🚀 ~ file: Chest.tsx:25 ~ chestAmount",
     chestAmount && chestAmount.toString()
@@ -30,14 +28,13 @@ const Chest: FC = () => {
 
   return (
     <div>
-      <div className="flex w-full flex-col pb-8">
-        <h2 className="text-xl font-bold text-white">Chest</h2>
-        <p className="text-neutral-light">Open Chest.</p>
+      <div className="flex w-full flex-col items-center pb-8">
         {!chestAmountIsLoading && (
           <p className="text-neutral-light">
             Available {chestAmount.toString()}
           </p>
         )}
+        <img src="/menuitem02.png" alt="" className="w-52" />
         <Web3Button
           contractAddress={PACK_ADDRESS}
           action={async () => {
