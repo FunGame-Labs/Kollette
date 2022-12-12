@@ -23,13 +23,14 @@ export default function CreateModal() {
   } = useForm();
   const onSubmit = (data: any) => {
     console.log("submitted: ", data);
-    createDirectListing(data.tokenId, data.price);
+    createDirectListing(data.tokenId, data.price, data.quantity);
   };
 
   async function createDirectListing(
     // contractAddress: string,
     tokenId: string,
-    price: string
+    price: string,
+    quantity: number
   ) {
     try {
       const transaction = await marketplace?.direct.createListing({
@@ -37,7 +38,7 @@ export default function CreateModal() {
         buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
         currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the cryptocurency that is native to the network. i.e. Goerli Ether.
         listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
-        quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+        quantity: quantity, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
         startTimestamp: new Date(0), // When the listing will start (now)
         tokenId: tokenId, // Token ID of the NFT.
       });
@@ -116,9 +117,20 @@ export default function CreateModal() {
                   id="price"
                   type="text"
                   placeholder="Sale Price"
-                  autoComplete="family-name"
                   className="input w-full max-w-xs"
                   {...register("price")}
+                />
+              </fieldset>
+              <fieldset>
+                <label htmlFor="quantity" className="label">
+                  Quantity
+                </label>
+                <input
+                  id="quantity"
+                  type="text"
+                  placeholder="Amount"
+                  className="input w-full max-w-xs"
+                  {...register("quantity")}
                 />
               </fieldset>
 

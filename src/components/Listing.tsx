@@ -47,15 +47,17 @@ const Listing: FC = () => {
         {loadingListings ? (
           <div>Loading listings...</div>
         ) : (
-          <div className="span-1">
+          <>
             {listings?.map((listing) => (
-              <div key={listing.id}>
+              <div key={listing.id} className="span-1">
                 <Card
                   title={listing.asset.name || ""}
                   subtitle={
                     listing.buyoutCurrencyValuePerToken.displayValue +
                     " " +
-                    listing.buyoutCurrencyValuePerToken.symbol
+                    listing.buyoutCurrencyValuePerToken.symbol +
+                    " x " +
+                    listing.quantity.toString()
                   }
                   description={listing.asset.description || ""}
                   image={listing.asset.image || ""}
@@ -63,7 +65,7 @@ const Listing: FC = () => {
                 />
               </div>
             ))}
-          </div>
+          </>
         )}
       </div>
     </>
