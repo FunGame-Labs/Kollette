@@ -5,25 +5,24 @@ import {
   useAddress,
   useContract,
   useContractEvents,
-  useContractRead,
   useContractWrite,
 } from "@thirdweb-dev/react";
 import clsx from "clsx";
-import { FC, useRef } from "react";
-import { useEffect, useState } from "react";
+import type { FC } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import SlotMachine from "../lib";
 import { KOLLETTE_ABI } from "../utils/abis";
 import { KOLLETTE_ADDRESS } from "../utils/constants";
-import SlotMachine from "../lib";
 
 const timeout = (delay: number) => new Promise((res) => setTimeout(res, delay));
 
 const chipType = [
-  { value: "0", image: "/Chip01.png", title: "chip 1" },
-  { value: "1", image: "/Chip02.png", title: "chip 2" },
-  { value: "2", image: "/Chip03.png", title: "chip 3" },
-  { value: "3", image: "/Chip04.png", title: "chip 4" },
-  { value: "4", image: "/Chip05.png", title: "chip 5" },
+  { value: "0", image: "/Chip01.png", title: "10 chip" },
+  { value: "1", image: "/Chip02.png", title: "20 chip" },
+  { value: "2", image: "/Chip03.png", title: "50 chip" },
+  { value: "3", image: "/Chip04.png", title: "100 chip" },
+  { value: "4", image: "/Chip05.png", title: "500 chip" },
 ];
 
 const ChipsSelect: FC = () => {
@@ -109,6 +108,107 @@ const ChipsSelect: FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
+      <Toaster />
+
+      {/* slot machine */}
+      <div
+        id="randomize"
+        className="h-[490px] w-full bg-[url('/slotmachine.png')] bg-cover"
+      >
+        <div className="container pt-[250px]">
+          <div className="flex flex-row justify-center gap-4">
+            <div className="col-sm-4">
+              <div className="randomize__item">
+                <div ref={ref1} id="machine0" className="randomizeMachine">
+                  <div>
+                    <img src="/slot1.png" />
+                  </div>
+                  <div>
+                    <img src="/slot2.png" />
+                  </div>
+                  <div>
+                    <img src="/slot3.png" />
+                  </div>
+                  <div>
+                    <img src="/slot4.png" />
+                  </div>
+                  <div>
+                    <img src="/slot5.png" />
+                  </div>
+                  <div>
+                    <img src="/slot6.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-sm-4">
+              <div className="randomize__item">
+                <div ref={ref2} id="machine1" className="randomizeMachine">
+                  <div>
+                    <img src="/slot1.png" />
+                  </div>
+                  <div>
+                    <img src="/slot2.png" />
+                  </div>
+                  <div>
+                    <img src="/slot3.png" />
+                  </div>
+                  <div>
+                    <img src="/slot4.png" />
+                  </div>
+                  <div>
+                    <img src="/slot5.png" />
+                  </div>
+                  <div>
+                    <img src="/slot6.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-sm-4">
+              <div className="randomize__item">
+                <div ref={ref3} id="machine2" className="randomizeMachine">
+                  <div>
+                    <img src="/slot1.png" />
+                  </div>
+                  <div>
+                    <img src="/slot2.png" />
+                  </div>
+                  <div>
+                    <img src="/slot3.png" />
+                  </div>
+                  <div>
+                    <img src="/slot4.png" />
+                  </div>
+                  <div>
+                    <img src="/slot5.png" />
+                  </div>
+                  <div>
+                    <img src="/slot6.png" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex justify-center">
+        <div className="btn-group-justified btn-group" role="group">
+          <button
+            id="randomizeButton"
+            type="button"
+            onClick={spinMachine}
+            className="btn btn-primary btn-lg"
+          >
+            Spin with {type}!
+          </button>
+        </div>
+      </div>
+
+      {/* Chips */}
       <div className="flex flex-row gap-2">
         <RadioGroupPrimitive.Root
           onValueChange={(e) => {
@@ -136,120 +236,6 @@ const ChipsSelect: FC = () => {
           </div>
         </RadioGroupPrimitive.Root>
       </div>
-      <div className="pt-16">
-        <Toaster />
-        <button onClick={playRoulette} className="btn btn-primary">
-          Spin with {type}!
-        </button>
-      </div>
-
-      {/* slot machine */}
-      <div id="randomize">
-        <div className="container">
-          <h1>Randomize your stuff!</h1>
-
-          <div className="flex flex-row">
-            <div className="col-sm-4">
-              <div className="randomize__item">
-                <div ref={ref1} id="machine0" className="randomizeMachine">
-                  <div>
-                    <img src="/slot1.png" />
-                  </div>
-                  <div>
-                    <img src="/slot2.png" />
-                  </div>
-                  <div>
-                    <img src="/slot3.png" />
-                  </div>
-                  <div>
-                    <img src="/slot4.png" />
-                  </div>
-                  <div>
-                    <img src="/slot5.png" />
-                  </div>
-                  <div>
-                    <img src="/slot6.png" />
-                  </div>
-                </div>
-              </div>
-              <div id="machine0Result" className="col-xs-4 machineResult">
-                Index: 0
-              </div>
-            </div>
-
-            <div className="col-sm-4">
-              <div className="randomize__item">
-                <div ref={ref2} id="machine1" className="randomizeMachine">
-                  <div>
-                    <img src="/slot1.png" />
-                  </div>
-                  <div>
-                    <img src="/slot2.png" />
-                  </div>
-                  <div>
-                    <img src="/slot3.png" />
-                  </div>
-                  <div>
-                    <img src="/slot4.png" />
-                  </div>
-                  <div>
-                    <img src="/slot5.png" />
-                  </div>
-                  <div>
-                    <img src="/slot6.png" />
-                  </div>
-                </div>
-              </div>
-              <div id="machine1Result" className="col-xs-4 machineResult">
-                Index: 1
-              </div>
-            </div>
-
-            <div className="col-sm-4">
-              <div className="randomize__item">
-                <div ref={ref3} id="machine2" className="randomizeMachine">
-                  <div>
-                    <img src="/slot1.png" />
-                  </div>
-                  <div>
-                    <img src="/slot2.png" />
-                  </div>
-                  <div>
-                    <img src="/slot3.png" />
-                  </div>
-                  <div>
-                    <img src="/slot4.png" />
-                  </div>
-                  <div>
-                    <img src="/slot5.png" />
-                  </div>
-                  <div>
-                    <img src="/slot6.png" />
-                  </div>
-                </div>
-              </div>
-              <div id="machine2Result" className="col-xs-4 machineResult">
-                Index: 2
-              </div>
-            </div>
-          </div>
-
-          <div className="flex">
-            <div className="btn-group-justified btn-group" role="group">
-              <button
-                id="randomizeButton"
-                type="button"
-                className="btn-danger btn btn-lg"
-              >
-                Shuffle
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button onClick={spinMachine} className="btn btn-primary">
-        Spin with {type}!
-      </button>
     </div>
   );
 };
