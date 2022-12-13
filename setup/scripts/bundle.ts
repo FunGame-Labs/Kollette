@@ -1,12 +1,12 @@
 import { ChainOrRpc, ThirdwebSDK } from "@thirdweb-dev/sdk";
-import "dotenv/config";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import "dotenv/config";
 import { readFileSync } from "fs";
 
 // === UPDATE THESE VALUES TO MATCH YOUR CONTRACT AND NETWORK ===
 const EDITION_ADDRESS = "0xd5a28D91140A13A40c2f559115847367b1819E82"; // The address of the edition contract
 const PACK_ADDRESS = "0xA9BB549899512f296825cb68F0347298917A1616"; // Pack Smart Contract Address
-const network: ChainOrRpc = "optimism-goerli"; // The network your contracts are deployed to
+const network: ChainOrRpc = "mumbai"; // The network your contracts are deployed to
 const PRIVATE_KEY = process.env.PRIVATE_KEY!; // Read the README for how to set this up in a .env file
 const lootBoxImageFileName = "../assets/lootbox.png"; // The name of the image file you want to be used for the lootbox metadata
 // NOTE: You will also need to configure line `30` onwards to configure your pack rewards.

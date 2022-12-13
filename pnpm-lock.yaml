@@ -5,6 +5,7 @@ specifiers:
   '@radix-ui/react-dialog': ^1.0.2
   '@radix-ui/react-icons': ^1.1.1
   '@radix-ui/react-radio-group': ^1.1.0
+  '@tanstack/react-query': ^4.19.1
   '@thirdweb-dev/react': ^3.6.2
   '@thirdweb-dev/sdk': ^3.6.2
   '@thirdweb-dev/storage': ^1.0.6
@@ -44,6 +45,7 @@ dependencies:
   '@radix-ui/react-dialog': 1.0.2_2zx2umvpluuhvlq44va5bta2da
   '@radix-ui/react-icons': 1.1.1_react@18.2.0
   '@radix-ui/react-radio-group': 1.1.0_biqbaboplfbrettd7655fr4n2y
+  '@tanstack/react-query': 4.19.1_biqbaboplfbrettd7655fr4n2y
   '@thirdweb-dev/react': 3.6.2_wucomxuvbxlgi5t76vk2qw5ihe
   '@thirdweb-dev/sdk': 3.6.2_ethers@5.7.2
   '@thirdweb-dev/storage': 1.0.6
@@ -1757,12 +1759,12 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@tanstack/query-core/4.18.0:
-    resolution: {integrity: sha512-PP4mG8MD08sq64RZCqMfXMYfaj7+Oulwg7xZ/fJoEOdTZNcPIgaOkHajZvUBsNLbi/0ViMvJB4cFkL2Jg2WPbw==}
+  /@tanstack/query-core/4.19.1:
+    resolution: {integrity: sha512-Zp0aIose5C8skBzqbVFGk9HJsPtUhRVDVNWIqVzFbGQQgYSeLZMd3Sdb4+EnA5wl1J7X+bre2PJGnQg9x/zHOA==}
     dev: false
 
-  /@tanstack/react-query/4.18.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-s1kdbGMdVcfUIllzsHUqVUdktBT5uuIRgnvrqFNLjl9TSOXEoBSDrhjsGjao0INQZv8cMpQlgOh3YH9YtN6cKw==}
+  /@tanstack/react-query/4.19.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-5dvHvmc0vrWI03AJugzvKfirxCyCLe+qawrWFCXdu8t7dklIhJ7D5ZhgTypv7mMtIpdHPcECtCiT/+V74wCn2A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -1773,7 +1775,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 4.18.0
+      '@tanstack/query-core': 4.19.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
@@ -1820,7 +1822,7 @@ packages:
       '@gnosis.pm/safe-ethers-lib': 1.7.0
       '@react-icons/all-files': 4.1.0_react@18.2.0
       '@solana/wallet-adapter-phantom': 0.9.18
-      '@tanstack/react-query': 4.18.0_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query': 4.19.1_biqbaboplfbrettd7655fr4n2y
       '@thirdweb-dev/sdk': 3.6.2_ethers@5.7.2
       '@zag-js/menu': 0.1.16
       '@zag-js/react': 0.1.18_react@18.2.0
