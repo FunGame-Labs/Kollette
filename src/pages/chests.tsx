@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Chest from "../components/Chest";
+import LastOpened from "../components/LastOpened";
 import Leaderboard from "../components/Leaderboard";
 import OpenActivities from "../components/OpenActivities";
 
@@ -27,8 +28,8 @@ const Home: NextPage = () => {
                 <h1 className="text-3xl font-extrabold italic text-white">
                   Chests
                 </h1>
+                <Chest />
               </div>
-              <Chest />
             </div>
             <div className="w-full rounded-lg border border-neutral-medium p-4">
               <h2 className="text-white">Activites</h2>
@@ -36,7 +37,12 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="col-span-1 w-full rounded-lg bg-neutral-medium p-4">
-            <h2 className="text-white">Global Chat</h2>
+            <div className="p-4">
+              <h1 className="text-3xl font-extrabold italic text-white">
+                Last opened
+              </h1>
+              <LastOpened />
+            </div>
           </div>
         </div>
       </main>
