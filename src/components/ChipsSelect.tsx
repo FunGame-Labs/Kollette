@@ -22,7 +22,7 @@ import {
 
 const timeout = (delay: number) => new Promise((res) => setTimeout(res, delay));
 
-const chipType = [
+export const chipTypes = [
   { value: "0", image: "/Chip01.png", title: "10 chip" },
   { value: "1", image: "/Chip02.png", title: "20 chip" },
   { value: "2", image: "/Chip03.png", title: "50 chip" },
@@ -65,7 +65,7 @@ const ChipsSelect: FC = () => {
 
   const { contract: chip } = useContract(CHESTCHIP_ADDRESS, "edition");
   const chipAmounts = useQueries({
-    queries: chipType.map((chipT) => {
+    queries: chipTypes.map((chipT) => {
       return {
         queryKey: ["chip", chipT.value],
         queryFn: async () => await chip?.balanceOf(address || "", chipT.value),
@@ -85,7 +85,7 @@ const ChipsSelect: FC = () => {
       toast.success(`You win`);
     }
     if (events.data[0]?.data._result === false) {
-      const element = chipType.find(
+      const element = chipTypes.find(
         (x) => +x.value === events.data[0]?.data._type
       )?.title;
       toast.error(`You lose`);
@@ -248,11 +248,11 @@ const ChipsSelect: FC = () => {
           onValueChange={(e) => {
             coinControls.play();
             setValue(e);
-            setType(chipType[Number(e)]!.title);
+            setType(chipTypes[Number(e)]!.title);
           }}
         >
           <div className="flex">
-            {chipType.map((item, index) => (
+            {chipTypes.map((item, index) => (
               <div key={item.value} className="flex items-center">
                 <RadioGroupPrimitive.Item
                   id={item.value}

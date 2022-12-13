@@ -12,20 +12,20 @@ const LastOpened: FC = () => {
   );
 
   return (
-    <div>
+    <div className="pt-12">
       {/* <h2>Opened Rewards</h2> */}
-      <div>
+      <div className="w-full rounded-xl bg-gradient-to-r from-[#740ddc] to-[rgb(246,78,255)] p-[5px]">
         {openedPackRewards &&
           openedPackRewards?.erc1155Rewards &&
           openedPackRewards?.erc1155Rewards?.length > 0 && (
-            <>
-              <h3>Chest Content</h3>
-              <div className="p-8 border border-primary">
+            <div className="flex h-full w-full flex-col justify-between items-center rounded-lg bg-neutral-dark p-4">
+              <h3 className="text-lg text-white">Chest Content</h3>
+              <div>
                 {openedPackRewards?.erc1155Rewards.map((reward, i) => (
                   <ERC1155RewardBox reward={reward} key={i} />
                 ))}
               </div>
-            </>
+            </div>
           )}
       </div>
     </div>

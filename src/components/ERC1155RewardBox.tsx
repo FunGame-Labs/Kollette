@@ -17,10 +17,10 @@ export default function ERC115RewardBox({ reward }: Props) {
   return (
     <div>
       {data && (
-        <>
+        <div className="flex flex-col items-center">
           <ThirdwebNftMedia metadata={data?.metadata} />
           <h3>{data?.metadata.name}</h3>
-        </>
+        </div>
       )}
     </div>
   );
