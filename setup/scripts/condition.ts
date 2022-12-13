@@ -1,8 +1,5 @@
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
-import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
 dotenv.config();
 
 if (!process.env.PRIVATE_KEY) throw "PRIVATE_KEY not found";

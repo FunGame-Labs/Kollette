@@ -1,6 +1,7 @@
 "use client";
 
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import { useMutation } from "@tanstack/react-query";
 import {
   useAddress,
   useContract,
@@ -11,10 +12,10 @@ import clsx from "clsx";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useAudio } from "react-use";
 import SlotMachine from "../lib";
 import { KOLLETTE_ABI } from "../utils/abis";
-import { KOLLETTE_ADDRESS } from "../utils/constants";
-import { useAudio } from "react-use";
+import { KOLLETTE_ADDRESS, PACK_ADDRESS } from "../utils/constants";
 
 const timeout = (delay: number) => new Promise((res) => setTimeout(res, delay));
 
@@ -34,7 +35,16 @@ const ChipsSelect: FC = () => {
   const [slotMachine2, setSlotMachine2] = useState<SlotMachine>();
   const [slotMachine3, setSlotMachine3] = useState<SlotMachine>();
   const address = useAddress();
-  const { contract: kollette } = useContract(KOLLETTE_ADDRESS, KOLLETTE_ABI);
+  const mutation = useMutation({
+    mutationFn: () => fetch(`/api/register?address=${address}`),
+    onSuccess: async (data, error, variables, context) => {
+      console.log("success spin: ", data);
+      console.log("success variables: ", variables);
+      console.log("success context: ", context);
+      alert("You scored and won a chest. Go to Chests page to open it!")
+    },
+  });
+
   const [wheelAudio, , wheelControls] = useAudio({
     src: "/wheel.wav",
     autoPlay: false,
@@ -42,9 +52,9 @@ const ChipsSelect: FC = () => {
   const [coinAudio, , coinControls] = useAudio({
     src: "/coins.wav",
     autoPlay: false,
-
   });
-  const { mutateAsync: spin } = useContractWrite(kollette, "FUNCTION_NAME");
+
+  const { contract: kollette } = useContract(KOLLETTE_ADDRESS, KOLLETTE_ABI);
   const events = useContractEvents(kollette, "Play", { subscribe: true });
   useEffect(() => {
     if (!events.data) {
@@ -59,7 +69,7 @@ const ChipsSelect: FC = () => {
       const element = chipType.find(
         (x) => +x.value === events.data[0]?.data._type
       )?.title;
-      toast.error(`You lose, enemy weakness was ${element}`);
+      toast.error(`You lose`);
     }
   }, [events.data]);
 
@@ -91,27 +101,32 @@ const ChipsSelect: FC = () => {
     }
   }, []);
 
-  const playGame = async () => {
-    if (!address) return;
+  // const playGame = async () => {
+  //   if (!address) return;
 
-    const response = await fetch(`/api/server?address=${address}`)
-      .then((response) => response.json())
-      .catch((err) => console.error(err));
+  //   const response = await fetch(`/api/server?address=${address}`)
+  //     .then((response) => response.json())
+  //     .catch((err) => console.error(err));
 
-    await spin(["parameters"]);
-    await fetch(`/api/register?address=${address}&score=${123}`);
-  };
-
-  const playRoulette = async () => {
-    await spin([selected, value]);
-  };
+  //   await spin(["parameters"]);
+  //   await fetch(`/api/register?address=${address}&score=${123}`);
+  // };
 
   const spinMachine = async () => {
+    if (!address) {
+      alert("connect your wallet to mumbai to play");
+      return;
+    }
+    // await wheelControls.play();
+
     slotMachine1?.shuffle(3);
     slotMachine2?.shuffle(5);
     slotMachine3?.shuffle(7);
 
-    await wheelControls.play();
+    mutation.mutate();
+    // const response = await fetch(`/api/register?address=${address}`)
+    //   .then((response) => response.json())
+    //   .catch((err) => console.error(err));
   };
 
   return (
@@ -209,7 +224,7 @@ const ChipsSelect: FC = () => {
             id="randomizeButton"
             type="button"
             onClick={spinMachine}
-            className="btn btn-primary btn-lg"
+            className="btn-primary btn-lg btn"
           >
             Spin with {type}!
           </button>
@@ -240,7 +255,7 @@ const ChipsSelect: FC = () => {
                 ></RadioGroupPrimitive.Item>
                 <label htmlFor={item.value} className={clsx("cursor-pointer")}>
                   {/* <p className="text-white">{item.title}</p> */}
-                  <img src={item.image}></img>
+                  <img src={item.image} className="w-40"></img>
                 </label>
               </div>
             ))}
