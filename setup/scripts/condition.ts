@@ -15,8 +15,7 @@ const main = async () => {
   // Constants
 
   // get contract
-  // const sdk = ThirdwebSDK.fromPrivateKey(PRIVATE_KEY, "mumbai");
-  const sdk = ThirdwebSDK.fromPrivateKey(PRIVATE_KEY, "optimism-goerli");
+  const sdk = ThirdwebSDK.fromPrivateKey(PRIVATE_KEY, "mumbai");
 
   // create contract
   const contract = await sdk.getContract(
