@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC } from "react";
 import useStore from "../utils/store";
 import ERC1155RewardBox from "./ERC1155RewardBox";
 

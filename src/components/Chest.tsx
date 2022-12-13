@@ -4,21 +4,19 @@ import {
   useAddress,
   useContract,
   useContractRead,
-  useOwnedNFTs,
   Web3Button,
 } from "@thirdweb-dev/react";
-import { PackRewards } from "@thirdweb-dev/sdk/dist/declarations/src/evm/schema";
 import type { FC } from "react";
 import { useState } from "react";
-import ERC1155RewardBox from "../components/ERC1155RewardBox";
+import ConfettiExplosion from "react-confetti-explosion";
 import { PACK_ADDRESS } from "../utils/constants";
 import useStore from "../utils/store";
 
 const Chest: FC = () => {
   const address = useAddress();
+  const [isExploding, setIsExploding] = useState(false);
+
   const { contract: pack } = useContract(PACK_ADDRESS, "pack");
-  const { data: nfts, isLoading } = useOwnedNFTs(pack, address);
-  // const [openedPackRewards, setOpenedPackRewards] = useState<PackRewards>();
   const { setOpenedPackRewards } = useStore();
 
   const { data: chestAmount, isLoading: chestAmountIsLoading } =
@@ -30,6 +28,8 @@ const Chest: FC = () => {
 
   return (
     <div>
+      <>{isExploding && <ConfettiExplosion />}</>
+
       <div className="flex w-full flex-col items-center py-16">
         {!chestAmountIsLoading && (
           <p className="text-neutral-light">
@@ -48,7 +48,6 @@ const Chest: FC = () => {
           Open
         </Web3Button>
       </div>
-
     </div>
   );
 };
