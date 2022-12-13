@@ -28,8 +28,9 @@ const OpenActivities: FC = () => {
       <table className="w-full">
         <thead>
           <tr>
-            <th className="text-start">Address</th>
+            <th className="text-start">Asset</th>
             <th className="text-start">Id</th>
+            <th className="text-start">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -37,11 +38,18 @@ const OpenActivities: FC = () => {
             activities.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{`${item.data.opener.slice(
+                  <td>{`${item.data.rewardUnitsDistributed[0].assetContract.slice(
                     0,
                     4
-                  )}...${item.data.opener.slice(-4)}`}</td>
-                  <td>{item.data.packId.toString()}</td>
+                  )}...${item.data.rewardUnitsDistributed[0].assetContract.slice(
+                    -4
+                  )}`}</td>
+                  <td>
+                    {item.data.rewardUnitsDistributed[0].tokenId.toString()}
+                  </td>
+                  <td>
+                    {item.data.rewardUnitsDistributed[0].totalAmount.toString()}
+                  </td>
                 </tr>
               );
             })}

@@ -19,8 +19,8 @@ const LastOpened: FC = () => {
           openedPackRewards?.erc1155Rewards &&
           openedPackRewards?.erc1155Rewards?.length > 0 && (
             <>
-              <h3>ERC-1155 Tokens</h3>
-              <div>
+              <h3>Chest Content</h3>
+              <div className="p-8 border border-primary">
                 {openedPackRewards?.erc1155Rewards.map((reward, i) => (
                   <ERC1155RewardBox reward={reward} key={i} />
                 ))}
