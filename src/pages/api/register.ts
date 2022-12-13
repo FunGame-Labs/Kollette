@@ -31,10 +31,8 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   res.json({
-    data: {
-      score,
-      isWin,
-    },
+    score,
+    isWin,
   });
 };
 

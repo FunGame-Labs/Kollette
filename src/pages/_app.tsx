@@ -12,7 +12,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ThirdwebProvider desiredChainId={ChainId.OptimismGoerli}>
+        <ThirdwebProvider desiredChainId={ChainId.Mumbai}>
           <NextHead />
           <Layout>
             <Component {...pageProps} />

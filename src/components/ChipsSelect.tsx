@@ -1,12 +1,11 @@
 "use client";
 
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 import {
   useAddress,
   useContract,
   useContractEvents,
-  useContractWrite,
 } from "@thirdweb-dev/react";
 import clsx from "clsx";
 import type { FC } from "react";
@@ -15,7 +14,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useAudio } from "react-use";
 import SlotMachine from "../lib";
 import { KOLLETTE_ABI } from "../utils/abis";
-import { KOLLETTE_ADDRESS, PACK_ADDRESS } from "../utils/constants";
+import {
+  CHESTCHIP_ADDRESS,
+  DEPOSIT_ADDRESS,
+  KOLLETTE_ADDRESS,
+} from "../utils/constants";
 
 const timeout = (delay: number) => new Promise((res) => setTimeout(res, delay));
 
@@ -28,20 +31,26 @@ const chipType = [
 ];
 
 const ChipsSelect: FC = () => {
-  const [selected, setSelected] = useState<number>(-1);
-  const [value, setValue] = useState(chipType[0]!.value);
-  const [type, setType] = useState(chipType[0]!.title);
+  const [value, setValue] = useState("0");
+  const [type, setType] = useState("10 chip");
   const [slotMachine1, setSlotMachine1] = useState<SlotMachine>();
   const [slotMachine2, setSlotMachine2] = useState<SlotMachine>();
   const [slotMachine3, setSlotMachine3] = useState<SlotMachine>();
   const address = useAddress();
   const mutation = useMutation({
-    mutationFn: () => fetch(`/api/register?address=${address}`),
-    onSuccess: async (data, error, variables, context) => {
+    mutationFn: async () =>
+      await fetch(`/api/register?address=${address}`).then((data) =>
+        data.json()
+      ),
+    onSuccess: async (data) => {
       console.log("success spin: ", data);
-      console.log("success variables: ", variables);
-      console.log("success context: ", context);
-      alert("You scored and won a chest. Go to Chests page to open it!")
+      if (data.isWin) {
+        alert(
+          `You scored ${data.score} and won a chest. Go to Chests page to open it!`
+        );
+      } else {
+        alert(`You scored ${data.score}, try again to win a chest!`);
+      }
     },
   });
 
@@ -52,6 +61,16 @@ const ChipsSelect: FC = () => {
   const [coinAudio, , coinControls] = useAudio({
     src: "/coins.wav",
     autoPlay: false,
+  });
+
+  const { contract: chip } = useContract(CHESTCHIP_ADDRESS, "edition");
+  const chipAmounts = useQueries({
+    queries: chipType.map((chipT) => {
+      return {
+        queryKey: ["chip", chipT.value],
+        queryFn: async () => await chip?.balanceOf(address || "", chipT.value),
+      };
+    }),
   });
 
   const { contract: kollette } = useContract(KOLLETTE_ADDRESS, KOLLETTE_ABI);
@@ -101,32 +120,18 @@ const ChipsSelect: FC = () => {
     }
   }, []);
 
-  // const playGame = async () => {
-  //   if (!address) return;
-
-  //   const response = await fetch(`/api/server?address=${address}`)
-  //     .then((response) => response.json())
-  //     .catch((err) => console.error(err));
-
-  //   await spin(["parameters"]);
-  //   await fetch(`/api/register?address=${address}&score=${123}`);
-  // };
-
   const spinMachine = async () => {
-    if (!address) {
+    if (!address || !chip) {
       alert("connect your wallet to mumbai to play");
       return;
     }
-    // await wheelControls.play();
-
-    slotMachine1?.shuffle(3);
-    slotMachine2?.shuffle(5);
-    slotMachine3?.shuffle(7);
-
+    const data = await chip.transfer(DEPOSIT_ADDRESS, value, 1);
     mutation.mutate();
-    // const response = await fetch(`/api/register?address=${address}`)
-    //   .then((response) => response.json())
-    //   .catch((err) => console.error(err));
+
+    await wheelControls.play();
+    slotMachine1?.shuffle(5);
+    slotMachine2?.shuffle(8);
+    slotMachine3?.shuffle(11);
   };
 
   return (
@@ -224,7 +229,11 @@ const ChipsSelect: FC = () => {
             id="randomizeButton"
             type="button"
             onClick={spinMachine}
-            className="btn-primary btn-lg btn"
+            disabled={mutation.isLoading}
+            className={clsx(
+              "btn-primary btn-lg btn",
+              mutation.isLoading && "loading"
+            )}
           >
             Spin with {type}!
           </button>
@@ -243,7 +252,7 @@ const ChipsSelect: FC = () => {
           }}
         >
           <div className="flex">
-            {chipType.map((item) => (
+            {chipType.map((item, index) => (
               <div key={item.value} className="flex items-center">
                 <RadioGroupPrimitive.Item
                   id={item.value}
@@ -256,6 +265,13 @@ const ChipsSelect: FC = () => {
                 <label htmlFor={item.value} className={clsx("cursor-pointer")}>
                   {/* <p className="text-white">{item.title}</p> */}
                   <img src={item.image} className="w-40"></img>
+                  <div className="flex w-full justify-center">
+                    {chipAmounts[0]?.isLoading || chipAmounts[0]?.isError ? (
+                      <p>Loading...</p>
+                    ) : (
+                      <p>{chipAmounts[index]?.data?.toString()}</p>
+                    )}
+                  </div>
                 </label>
               </div>
             ))}
