@@ -11,19 +11,19 @@ const Leaderboard: FC = () => {
   console.log("🚀 ~ file: ChipsSelect.tsx:54 ~ data", data);
 
   return (
-    <div className="h-80 overflow-y-scroll">
-      <table className="w-full">
+    <div className="overflow-x-auto">
+      <table className="table-zebra table-compact table w-full">
         <thead>
           <tr>
-            <th className="text-start">Address</th>
-            <th className="text-start">Id</th>
+            <th className="text-start">User</th>
+            <th className="text-start">Score</th>
           </tr>
         </thead>
         <tbody>
           {!isLoading &&
             data.map((item: any, index: number) => {
               return (
-                <tr key={index}>
+                <tr key={index} className="hover">
                   <td>{`${item.user.slice(0, 4)}...${item.user.slice(-4)}`}</td>
                   <td>{item.score.toString()}</td>
                 </tr>
