@@ -23,13 +23,11 @@ const Home: NextPage = () => {
             </div>
           </div>
           <div className="col-span-1 flex flex-col gap-4">
-            <div className="h-full w-full rounded-lg border border-neutral-medium p-4">
-              <div className="p-4">
-                <h1 className="text-3xl font-extrabold italic text-white">
-                  Chests
-                </h1>
-                <Chest />
-              </div>
+            <div className="flex h-full w-full flex-col justify-between rounded-lg border border-neutral-medium p-8">
+              <h1 className="text-3xl font-extrabold italic text-white">
+                Chests
+              </h1>
+              <Chest />
             </div>
             <div className="w-full rounded-lg border border-neutral-medium p-4">
               <h2 className="text-white">Activites</h2>

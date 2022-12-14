@@ -1,9 +1,11 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import { type AppType } from "next/dist/shared/lib/utils";
-import NextHead from "../components/NextHead";
-
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import Layout from "../components/Layout";
+import NextHead from "../components/NextHead";
 import "../styles/globals.css";
 
 const queryClient = new QueryClient();
