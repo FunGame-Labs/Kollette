@@ -12,12 +12,32 @@ if (!process.env.PUBLIC_KEY) throw "PUBLIC_KEY not found";
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 const register = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { address } = req.query;
+  const { address, chipType } = req.query;
 
+  let winThreshold = 500000;
+  switch (chipType) {
+    case "0":
+      winThreshold = 800000;
+      break;
+    case "1":
+      winThreshold = 700000;
+      break;
+    case "2":
+      winThreshold = 600000;
+      break;
+    case "3":
+      winThreshold = 500000;
+      break;
+    case "4":
+      winThreshold = 200000;
+      break;
+    default:
+      break;
+  }
   const maximum = 1000000,
     minimum = 100;
   const score = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-  const isWin = score > 500000;
+  const isWin = score > winThreshold;
   console.log("isWin: ", isWin, " Score: ", score);
 
   const sdk = ThirdwebSDK.fromPrivateKey(ADMIN_KEY, "mumbai");

@@ -8,7 +8,6 @@ import { KOLLETTE_ADDRESS } from "../utils/constants";
 const Leaderboard: FC = () => {
   const { contract: kollette } = useContract(KOLLETTE_ADDRESS, KOLLETTE_ABI);
   const { data, isLoading, error } = useContractRead(kollette, "getAll");
-  console.log("🚀 ~ file: ChipsSelect.tsx:54 ~ data", data);
 
   return (
     <div className="overflow-x-auto">

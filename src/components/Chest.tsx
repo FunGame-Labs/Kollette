@@ -44,13 +44,14 @@ const Chest: FC = () => {
       >
         {[0, 1].map((tokenId) => (
           <SwiperSlide key={tokenId}>
-            <div className="flex w-full flex-col items-center p-8">
+            <div className="flex w-full flex-col items-center gap-4 p-8">
               <div className="w-fit rounded border">
                 <img src={`/chest${tokenId}.png`} alt="" className="w-52" />
               </div>
               {!chestAmounts[0]?.isLoading && (
                 <p className="text-neutral-light">
-                  Available {chestAmounts[tokenId]?.data?.toString()}
+                  Available:{" "}
+                  {chestAmounts[tokenId]?.data?.toString() || "Loading..."}
                 </p>
               )}
               <Web3Button

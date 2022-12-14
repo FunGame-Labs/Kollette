@@ -7,10 +7,6 @@ import ERC721RewardBox from "./ERC721RewardBox";
 
 const LastOpened: FC = () => {
   const { openedPackRewards } = useStore();
-  console.log(
-    "🚀 ~ file: LastOpened.tsx:9 ~ openedPackRewards",
-    openedPackRewards
-  );
 
   return (
     <div className="flex flex-col gap-8 pt-12">

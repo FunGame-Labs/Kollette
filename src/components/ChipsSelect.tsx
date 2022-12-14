@@ -39,7 +39,7 @@ const ChipsSelect: FC = () => {
   const address = useAddress();
   const mutation = useMutation({
     mutationFn: async () =>
-      await fetch(`/api/register?address=${address}`).then((data) =>
+      await fetch(`/api/register?address=${address}&chipType=${value}`).then((data) =>
         data.json()
       ),
     onSuccess: async (data) => {
