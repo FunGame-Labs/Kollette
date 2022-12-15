@@ -20,8 +20,6 @@ import {
   KOLLETTE_ADDRESS,
 } from "../utils/constants";
 
-const timeout = (delay: number) => new Promise((res) => setTimeout(res, delay));
-
 export const chipTypes = [
   { value: "0", image: "/Chip01.png", title: "10 chip" },
   { value: "1", image: "/Chip02.png", title: "20 chip" },

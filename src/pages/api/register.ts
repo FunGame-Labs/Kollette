@@ -34,6 +34,7 @@ const register = async (req: NextApiRequest, res: NextApiResponse) => {
     default:
       break;
   }
+
   const maximum = 1000000,
     minimum = 100;
   const score = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
