@@ -39,8 +39,8 @@ const ChipsSelect: FC = () => {
   const address = useAddress();
   const mutation = useMutation({
     mutationFn: async () =>
-      await fetch(`/api/register?address=${address}&chipType=${value}`).then((data) =>
-        data.json()
+      await fetch(`/api/register?address=${address}&chipType=${value}`).then(
+        (data) => data.json()
       ),
     onSuccess: async (data) => {
       console.log("success spin: ", data);
@@ -141,9 +141,9 @@ const ChipsSelect: FC = () => {
       {/* slot machine */}
       <div
         id="randomize"
-        className="h-[490px] w-full bg-[url('/slotmachine.png')] bg-cover"
+        className="h-[490px] w-[940px] w-full bg-[url('/slotmachine.png')] bg-cover"
       >
-        <div className="container pt-[250px]">
+        <div className="container pt-[230px]">
           <div className="flex flex-row justify-center gap-4">
             <div className="col-sm-4">
               <div className="randomize__item">

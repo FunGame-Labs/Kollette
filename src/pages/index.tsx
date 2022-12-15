@@ -7,7 +7,7 @@ const Home: NextPage = () => {
       <main>
         <div className="grid h-full min-h-[calc(100vh-66px)] grid-cols-3 px-8 py-16">
           <div className="col-span-2">
-            <div className="flex h-full flex-col">
+            <div className="flex w-full h-full flex-col">
               <ChipsSelect />
             </div>
           </div>
