@@ -45,11 +45,11 @@ const ChipsSelect: FC = () => {
     onSuccess: async (data) => {
       console.log("success spin: ", data);
       if (data.isWin) {
-        alert(
+        toast(
           `You scored ${data.score} and won a chest. Go to Chests page to open it!`
         );
       } else {
-        alert(`You scored ${data.score}, try again to win a chest!`);
+        toast(`You scored ${data.score}, try again to win a chest!`);
       }
     },
   });

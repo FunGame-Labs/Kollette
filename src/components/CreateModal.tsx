@@ -5,13 +5,14 @@ import cx from "classnames";
 import { Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { useContract } from "@thirdweb-dev/react";
+import { useAddress, useContract } from "@thirdweb-dev/react";
 import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk/evm";
 import toast, { Toaster } from "react-hot-toast";
 import { CHESTCHIP_ADDRESS, MARKETPLACE_ADDRESS } from "../utils/constants";
 
 export default function CreateModal() {
   const [isOpen, setIsOpen] = useState(false);
+  const address = useAddress();
   const { contract: marketplace } = useContract(
     MARKETPLACE_ADDRESS,
     "marketplace"
@@ -23,6 +24,11 @@ export default function CreateModal() {
     formState: { errors },
   } = useForm();
   const onSubmit = async (data: any) => {
+    if (!address) {
+      alert("Connect Wallet");
+      return;
+    }
+
     try {
       console.log("submitted: ", data);
       await createDirectListing(data.tokenId, data.price, data.quantity);
